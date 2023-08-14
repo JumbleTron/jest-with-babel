@@ -1,6 +1,9 @@
+import DiscountCoupon from "./DiscountCoupon";
+
 export default class Basket {
 	constructor() {
 		this.products = [];
+		this.discount = null;
 	}
 
 	addProduct(product) {
@@ -36,5 +39,17 @@ export default class Basket {
 			}
 			return sum;
 		}, 0)
+	}
+
+	applyDiscount(couponName) {
+		this.discount = new DiscountCoupon(couponName, 'amount', 50);
+	}
+
+	getBasketTotal() {
+		if (this.discount !== null) {
+			return this.discount.getDiscount(this.getTotal())
+		}
+
+		return this.getTotal();
 	}
 }
